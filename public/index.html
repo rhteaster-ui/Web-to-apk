@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>WebToAPK Forge</title>
+  <meta name="theme-color" content="#080B14">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="noise"></div>
+  <main class="shell">
+    <section class="hero">
+      <div class="badge">
+        <span class="dot"></span>
+        Railway Ready · APK Builder
+      </div>
+      <h1>Convert website jadi APK dengan flow yang bersih.</h1>
+      <p class="lead">Masukkan URL, nama app, lalu biarkan server membangun APK lewat browser builder runtime. UI ini dibuat buat testing cepat dan deploy ringan.</p>
+
+      <div class="grid">
+        <form id="buildForm" class="panel form-card">
+          <div class="form-head">
+            <h2>Build App</h2>
+            <p>Semua proses jalan di server, hasil APK bisa langsung di-download.</p>
+          </div>
+
+          <label>
+            <span>Website URL</span>
+            <input id="websiteUrl" name="websiteUrl" placeholder="https://example.com" required>
+          </label>
+
+          <label>
+            <span>App Name</span>
+            <input id="appName" name="appName" placeholder="Rxyz App" maxlength="30" required>
+          </label>
+
+          <div class="twocol">
+            <label>
+              <span>Version</span>
+              <input id="appVersion" name="appVersion" placeholder="1.0.0" value="1.0.0">
+            </label>
+            <label>
+              <span>Icon Text</span>
+              <input id="iconText" name="iconText" placeholder="RX" maxlength="3">
+            </label>
+          </div>
+
+          <label>
+            <span>Package Name <small>opsional</small></span>
+            <input id="packageName" name="packageName" placeholder="com.webapp.rxyz">
+          </label>
+
+          <div class="settings">
+            <label class="switch">
+              <input type="checkbox" id="buildAab">
+              <span></span>
+              <b>Build AAB juga</b>
+            </label>
+            <label class="switch">
+              <input type="checkbox" id="permCamera">
+              <span></span>
+              <b>Camera permission</b>
+            </label>
+            <label class="switch">
+              <input type="checkbox" id="permStorage">
+              <span></span>
+              <b>Storage permission</b>
+            </label>
+          </div>
+
+          <button id="submitBtn" class="primary" type="submit">
+            <span>Generate APK</span>
+            <svg viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+          </button>
+        </form>
+
+        <aside class="panel status-card">
+          <div class="phone">
+            <div class="phone-top"></div>
+            <div class="screen">
+              <div class="app-icon" id="previewIcon">RX</div>
+              <h3 id="previewName">Rxyz App</h3>
+              <p id="previewUrl">https://example.com</p>
+              <div class="fakebar"></div>
+              <div class="fakebar small"></div>
+              <div class="fakegrid">
+                <i></i><i></i><i></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="live">
+            <div class="live-title">
+              <span>Status Build</span>
+              <b id="statusText">Idle</b>
+            </div>
+            <div class="progress">
+              <i id="progressBar"></i>
+            </div>
+            <p id="progressMessage">Belum ada job.</p>
+            <div id="downloadBox" class="downloads hidden"></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>
