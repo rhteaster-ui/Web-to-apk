@@ -10,6 +10,7 @@ const __dirname = path.dirname(__filename)
 
 const app = express()
 const PORT = Number(process.env.PORT || 3000)
+const HOST = process.env.HOST || '0.0.0.0'
 const OUTPUT_DIR = path.join(__dirname, 'output')
 const MAX_QUEUE = Number(process.env.MAX_QUEUE || 4)
 
@@ -295,6 +296,6 @@ setInterval(() => {
   }
 }, 1000 * 60 * 10)
 
-app.listen(PORT, () => {
-  console.log(`WebToAPK Builder v2 running on :${PORT}`)
+app.listen(PORT, HOST, () => {
+  console.log(`WebToAPK Builder v2 running on http://${HOST}:${PORT}`)
 })
