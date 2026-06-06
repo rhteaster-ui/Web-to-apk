@@ -1,20 +1,18 @@
-# WebToAPK Railway Builder
+# WebToAPK Railway Builder v2
 
-Web UI + API server siap deploy Railway untuk generate APK/AAB dari URL website.
+Railway-ready Web UI + API server untuk generate APK/AAB dari URL website.
 
-## Fitur
+## V2 changes
 
-- UI profesional dark/glass.
-- Build APK dari URL website.
-- Optional AAB.
-- Queue 1 job at a time supaya Chromium stabil.
-- Live progress via Server-Sent Events.
-- Download APK/AAB dari dashboard.
-- Dockerfile siap Railway.
+- Fix `page.evaluate: Execution context was destroyed` dengan isolated same-origin builder runtime.
+- Support upload app icon.
+- Support splash logo + splash background.
+- JSON limit dinaikkan untuk image data URL.
+- UI dark glass lebih rapih.
 
 ## Deploy Railway
 
-Upload project ini ke GitHub, lalu deploy di Railway. Railway akan memakai Dockerfile.
+Push folder ini ke GitHub, deploy ke Railway. Railway akan otomatis memakai Dockerfile.
 
 ## API
 
@@ -24,16 +22,8 @@ POST `/api/build`
 {
   "websiteUrl": "https://example.com",
   "appName": "Example App",
-  "appVersion": "1.0.0",
-  "packageName": "com.webapp.example",
+  "iconData": "data:image/png;base64,...",
+  "splashLogoData": "data:image/png;base64,...",
   "buildAab": false
 }
 ```
-
-GET `/api/jobs/:id`
-
-GET `/api/jobs/:id/events`
-
-GET `/api/download/:id/apk`
-
-GET `/api/download/:id/aab`
