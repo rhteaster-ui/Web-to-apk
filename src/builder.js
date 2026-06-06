@@ -139,10 +139,15 @@ export async function buildWebToApk(input) {
 
     onProgress('Creating isolated FreeWebToApk runtime...', 10)
 
-    // Masuk ke origin freewebtoapk dulu, lalu kosongkan halaman.
-    // Ini mencegah script wizard asli melakukan redirect/reload yang bikin "execution context destroyed".
-    await page.goto(`${BASE}/assets/favicon.svg`, { waitUntil: 'domcontentloaded', timeout })
-    await page.setContent(`<!doctype html>
+    // Serve an isolated HTML document on the FreeWebToApk origin.
+    // Avoid loading the public wizard or an SVG/image document before injecting the builder runtime.
+    const runtimeUrl = `${BASE}/__isolated-apk-builder-runtime.html`
+
+    await page.route(runtimeUrl, async route => {
+      await route.fulfill({
+        status: 200,
+        contentType: 'text/html; charset=utf-8',
+        body: `<!doctype html>
 <html>
 <head>
   <meta charset="utf-8">
@@ -151,7 +156,14 @@ export async function buildWebToApk(input) {
 <body>
   <canvas id="iconCanvas" width="512" height="512"></canvas>
 </body>
-</html>`, { waitUntil: 'domcontentloaded', timeout })
+</html>`
+      })
+    })
+
+    await page.goto(runtimeUrl, {
+      waitUntil: 'domcontentloaded',
+      timeout
+    })
 
     onProgress('Loading secure APK builder...', 15)
     await page.addScriptTag({ url: BUILDER_SCRIPT })
